@@ -1,9 +1,5 @@
-import time, sys, pygame
+import pygame, thread, screenupdate
 pygame.init()
 
-size = width, height = 224, 256
-
-screen = pygame.display.set_mode(size)
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
+if __name__ == "__main__":
+    tscreen = thread.start_new_thread(screenupdate)
