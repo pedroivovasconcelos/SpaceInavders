@@ -2,18 +2,6 @@ import threading, pygame
 pygame.init()    
 
 black = 0, 0, 0
-        
-def shooting(shoot,shootrect):
-    while True:
-        if (shootrect.top != 0):
-            shootrect = shootrect.move(0,-5)
-            print("tiro andando")
-        else:
-            shootrect = shootrect.move(x+15,y-50)
-            print("tiro chegou")
-            return
-        screen.blit(shoot, shootrect)
-        pygame.time.delay(41)
 
 if __name__ == "__main__":
     size = width, height = 300, 500
