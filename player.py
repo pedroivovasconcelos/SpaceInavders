@@ -1,4 +1,4 @@
-import threading, pygame, sys
+import threading, pygame
 pygame.init()    
 
 black = 0, 0, 0
@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
     shoot = pygame.image.load("shoot.png")
     shootlist = []
-    counter = 0
+    charger = 0
 
     while 1:
         pygame.time.delay(41)
@@ -46,21 +46,23 @@ if __name__ == "__main__":
                 spaceshiprect = spaceshiprect.move(5,0)
         if key[pygame.K_SPACE]:
             print("space")
-            if counter == 0:
 
+            if charger == 0:
                 shootrect = shoot.get_rect()
-                shootrect.move(spaceshiprect.left+15,spaceshiprect.top-15)
+                shootrect = shootrect.move(spaceshiprect.left+15,spaceshiprect.top-15)
                 shootlist.append(shootrect)
-                counter = 5
-            else:
-                counter-=1
-        
-        for shoots in shootlist:
-            try:
-                shoots = shoots.move(0,-5)
-                if shoots.top < 0:
-                    shootlist.remove(shoots.top)
-            screen.blit(shoot, shoots)
-            
+                charger = 40
+        if charger > 0:
+            charger-=1
+        print(charger)
+
+        if len(shootlist) != 0:
+            for index, shoots in enumerate(shootlist):
+                shootlist[index] = shoots.move(0,-5)
+                if 0 > shoots.top:
+                    shootlist.pop(index)
+                else:
+                    screen.blit(shoot, shootlist[index])
+
         screen.blit(spaceship, spaceshiprect)
         pygame.display.flip()
