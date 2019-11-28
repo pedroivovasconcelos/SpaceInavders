@@ -1,4 +1,4 @@
-import threading, pygame
+import threading, pygame, sys
 pygame.init()    
 
 black = 0, 0, 0
