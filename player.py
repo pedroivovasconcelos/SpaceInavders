@@ -33,7 +33,6 @@ if __name__ == "__main__":
             if (width != spaceshiprect.right):
                 spaceshiprect = spaceshiprect.move(5,0)
         if key[pygame.K_SPACE]:
-            print("space")
 
             if charger == 0:
                 shootrect = shoot.get_rect()
@@ -42,7 +41,6 @@ if __name__ == "__main__":
                 charger = 40
         if charger > 0:
             charger-=1
-        print(charger)
 
         if len(shootlist) != 0:
             for index, shoots in enumerate(shootlist):

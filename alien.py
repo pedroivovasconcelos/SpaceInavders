@@ -17,11 +17,16 @@ if __name__ == "__main__":
     laserlist = []
 
     for level in range(0,20):
+        counter = 0
+        row = 0
         for a in range(level+1):
-            print(a)
-            newalienrect = alienrect.move(a*50,alienrect.top)
+            newalienrect = alienrect.move(a*50-row*250,alienrect.top+50*row)
             alienlist.append(newalienrect)
-
+            counter+=1
+            if counter == 5:
+                counter = 0
+                row+=1
+            
         while 1:
             pygame.time.delay(1000)
             screen.fill(black)
