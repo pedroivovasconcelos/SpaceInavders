@@ -10,10 +10,10 @@ if __name__ == "__main__":
 
     x = 20
     y = 20
-    alien = pygame.image.load("alien.png")
+    alien = pygame.image.load("images/alien.png")
     alienrect = alien.get_rect()
     alienlist = []
-    laser = pygame.image.load("laser.png")
+    laser = pygame.image.load("images/laser.png")
     laserlist = []
 
     for level in range(0,20):

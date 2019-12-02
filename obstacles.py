@@ -8,14 +8,14 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Space Invaders - 2019 ATR/UFMG')
 
-    x = 50
+    x = 40
     y = 300
-    obstacle = pygame.image.load("obstacles.png")
+    obstacle = pygame.image.load("images/obstacles.png")
     obstaclerect = obstacle.get_rect()
     obstaclelist = []
 
     for a in range(4):
-        newobstaclerect = obstaclerect.move(20+a*70, obstaclerect.top+y)
+        newobstaclerect = obstaclerect.move(x+a*65, obstaclerect.top+y)
         obstaclelist.append(newobstaclerect)
         
     while 1:

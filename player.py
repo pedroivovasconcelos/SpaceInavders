@@ -10,11 +10,11 @@ if __name__ == "__main__":
 
     x = 125
     y = 400
-    spaceship = pygame.image.load("spaceship.png")
+    spaceship = pygame.image.load("images/spaceship.png")
     spaceshiprect = spaceship.get_rect()
     spaceshiprect = spaceshiprect.move(x,y)
 
-    shoot = pygame.image.load("shoot.png")
+    shoot = pygame.image.load("images/shoot.png")
     shootlist = []
     charger = 0
 
