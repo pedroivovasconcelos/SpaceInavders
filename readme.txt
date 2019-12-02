@@ -15,6 +15,14 @@
 
     python3 gamestart.py
 
- *É necessário instalar python 3.X 
+ Caso queira executar o game com número de fichas maior e level diferente, execute:
+
+   python3 gamestart.py "fichas" "level"
+
+ *Não se pode começar o game com número de fichas negativo, nem level negativo ou level
+  acima de 20, que é o level final
+ *Jogo se encerra se as fichas acabarem ou se completar os 20 levéis
+ *É necessário instalar python 3.X
+ *Versão utilizada no desenvolvimento do jogo é 3.8x64
 
  Mais Info: https://www.pygame.org/wiki/GettingStarted#Pygame%20Installation

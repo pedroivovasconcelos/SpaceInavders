@@ -44,6 +44,7 @@ if __name__ == "__main__":
                         screen.blit(alien, laserlist[index])
             
             for aliens in alienlist:
+                pygame.time.delay(100)
                 screen.blit(alien, aliens)
             pygame.display.flip()
 
