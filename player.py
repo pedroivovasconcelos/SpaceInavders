@@ -6,7 +6,7 @@ def player(gv):
     size = gv.size
     #listas são compostas por retângulos dos respectivos objetos, para destruir um objeto
     #uma lista fixa de produtor consumidor é gerada para destruir os objetos
-    # #{'player':[spaceship,spaceshiprect],'shoots':[shoot,shootlist]}
+    #{'player':[spaceship,spaceshiprect],'shoots':[shoot,shootlist]}
     playerdict = gv.playerdict
     spaceship = pygame.image.load("images/spaceship.png")
     spaceshiprect = spaceship.get_rect()

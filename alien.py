@@ -50,7 +50,6 @@ def aliens(gv):
     #para ir ao level desejado
     alock = threading.Lock()
     for t in range(gv.level-1):
-        print(t)
         at = threading.Thread(target = talien, args = (gv,alienrect,alock,))
         at.daemon = True
         at.start()

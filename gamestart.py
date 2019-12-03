@@ -15,6 +15,7 @@ class gamevariables:
     #uma lista fixa de produtor consumidor é gerada para destruir os objetos
     playerdict = dict() #{'player':[spaceship,spaceshiprect],'shoots':[shoot,shootlist]}
     aliendict = dict() #{'aliens':[alien,alienlist],'laser':[laser,laserlist]}
+    obstaclelist = [] #{[obstaclelist]}, obstaclelist = [obstacle, damage, obstaclerect]
 
 def main():
     if len(sys.argv) == 3:
@@ -31,15 +32,19 @@ if __name__ == "__main__":
     gv.screen = pygame.display.set_mode(gv.size)
     pygame.display.set_caption('Space Invaders - 2019 ATR/UFMG')
     main()
+
     s = threading.Thread(target = supdate.screenupdate, args = (gv,))
-    s.daemon = True
     p = threading.Thread(target = player.player, args = (gv,))
-    p.daemon = True
     a = threading.Thread(target = alien.aliens, args = (gv,))
+    o = threading.Thread(target = obstacles.obstacles, args = (gv,))
+    s.daemon = True
+    p.daemon = True
     a.daemon = True
+    o.daemon = True
     s.start()
     p.start()
     a.start()
+    o.start()
 
     running = True
     while running:

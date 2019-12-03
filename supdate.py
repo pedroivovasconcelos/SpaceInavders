@@ -8,12 +8,19 @@ def screenupdate(gv):
         time.sleep(gv.fps)
         playerdict = gv.playerdict
         aliendict = gv.aliendict
+        obstaclelist = gv.obstaclelist
         screen.fill(black)
 
         if not aliendict == False:
             if 'alien' in aliendict and len(aliendict['alien'][1]) != 0:
                 for aliens in aliendict['alien'][1]:
                     screen.blit(aliendict['alien'][0], aliens)
+
+        #obstaclelist = dict() #{'obs':[obstaclelist]}, obstaclelist = [obstacle, damage, obstaclerect]
+        if not obstaclelist == False:
+            if len(obstaclelist) != 0:
+                for obstacle in obstaclelist:
+                    screen.blit(obstacle[0],obstacle[2])
 
         if not playerdict == False:
             if 'player' in playerdict:

@@ -1,30 +1,32 @@
-import threading, pygame, sys
-pygame.init()    
+import pygame, time
 
-black = 0, 0, 0
+x = 40
+y = 375
+damage = 0
+level = 0
 
-if __name__ == "__main__":
-    size = width, height = 300, 500
-    screen = pygame.display.set_mode(size)
-    pygame.display.set_caption('Space Invaders - 2019 ATR/UFMG')
-
-    x = 40
-    y = 300
-    obstacle = pygame.image.load("images/obstacles.png")
+def renewobs(obstaclelist):
+    obstacle = pygame.image.load("images/obstacles0.png")
     obstaclerect = obstacle.get_rect()
-    obstaclelist = []
-
     for a in range(4):
-        newobstaclerect = obstaclerect.move(x+a*65, obstaclerect.top+y)
-        obstaclelist.append(newobstaclerect)
+        print(a)
+        obstaclelist.append([obstacle,damage,obstaclerect.move(x+a*65, obstaclerect.top+y)])
+
+def obstacles(gv):
+    global level
+    renewobs(gv.obstaclelist)
         
     while 1:
-        pygame.time.delay(1000)
-        screen.fill(black)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                sys.exit()
+        if level != gv.level:
+            level = gv.level
+            obstaclelist = []
+            damage = 0
+            
+            
+        # for a in range(4):
+        #     image = "images/obstacles{}.png".format(damage)
+        #     obstacle = pygame.image.load(image)
+        #     obstaclerect = obstacle.get_rect()
+        #     obstaclelist.append([obstacle,damage,obstaclerect.move(x+a*65, obstaclerect.top+y)])
         
-        for obstacles in obstaclelist:
-            screen.blit(obstacle, obstacles)
-        pygame.display.flip()
+        time.sleep(gv.fps)
