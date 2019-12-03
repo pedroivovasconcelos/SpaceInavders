@@ -95,10 +95,10 @@ def aliens(gv):
     alienrect = alien.get_rect()
     alienlist = []
     laser = pygame.image.load("images/laser.png")
-    laserlist = []
+    laserdict = dict()
 
     gv.aliendict['alien'] = [alien,alienlist]
-    gv.aliendict['laser'] = [laser,laserlist]
+    gv.aliendict['laser'] = [laser,laserdict]
     
     #para ir ao level desejado
     alock = threading.Lock()
