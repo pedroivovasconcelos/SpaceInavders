@@ -1,21 +1,56 @@
 import pygame, time, gamestart, threading
+from random import random
 
 counter = 0
 row = 0
+
+def lasershot(gv, alock, index, laserindex):
+    return
+
+def movealien(gv, index, direction, limitmove):
+    alienrect = gv.aliendict['alien'][1][index]
+    #em linha e em coluna
+    if(gv.size[0] != alienrect.right and direction and limitmove > 0):
+        alienrect = alienrect.move(1,0)
+        limitmove-=1
+    elif(0 != alienrect.left and not direction and limitmove > 0):
+        alienrect = alienrect.move(-1,0)
+        limitmove-=1
+    else:
+        alienrect = alienrect.move(0,10)
+        direction = not direction
+        limitmove = 50
+    
+    gv.aliendict['alien'][1][index] = alienrect
+
+    return direction, limitmove
+
+
 def talien(gv, alienrect, alock):
     global counter
     global row
     alock.acquire
     newalienrect = alienrect.move(counter*50,alienrect.top+50*row)
     gv.aliendict['alien'][1].append(newalienrect)
+    index = gv.aliendict['alien'][1].index(newalienrect)
     counter+=1
+    indexline = counter
     if counter == 5:
         counter = 0
         row+=1
     alock.release
 
+    direction = True
+    limitmove = 50
+    isshooting = False
+    laserindex = -1
     while True:
         time.sleep(gv.fps)
+        direction, limitmove = movealien(gv,index, direction, limitmove)
+        if random() > 0.9 and not isshooting:
+            isshooting = True
+            indexlaser = lasershot(gv, alock, index, laserindex)
+
         # laser = gv.aliendict['laser'][0]
         # laserlist = gv.aliendict['laser'][1]
         # if len(laserlist) != 0:
