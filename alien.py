@@ -13,7 +13,6 @@ def talien(gv, alienrect, alock):
         counter = 0
         row+=1
     alock.release
-    print(counter,row)
 
     while True:
         time.sleep(gv.fps)
