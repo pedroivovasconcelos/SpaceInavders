@@ -35,8 +35,11 @@ if __name__ == "__main__":
     s.daemon = True
     p = threading.Thread(target = player.player, args = (gv,))
     p.daemon = True
+    a = threading.Thread(target = alien.alien, args = (gv,))
+    a.daemon = True
     s.start()
     p.start()
+    a.start()
 
     running = True
     while running:
@@ -46,6 +49,3 @@ if __name__ == "__main__":
         time.sleep(0.01)
 
     quit()
-        
-
-    #a = alien.alien(size,aliendict)

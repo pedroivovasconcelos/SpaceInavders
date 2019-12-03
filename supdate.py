@@ -7,7 +7,13 @@ def screenupdate(gv):
     while True:
         time.sleep(1/30)
         playerdict = gv.playerdict
+        aliendict = gv.aliendict
         screen.fill(black)
+
+        if not aliendict == False:
+            if 'alien' in aliendict and len(aliendict['alien'][1]) != 0:
+                for aliens in aliendict['alien'][1]:
+                    screen.blit(aliendict['alien'][0], aliens)
 
         if not playerdict == False:
             if 'player' in playerdict:
