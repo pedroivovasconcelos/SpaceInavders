@@ -4,25 +4,23 @@ from random import random
 counter = 0
 row = 0
 
-def lasershot(gv, alock, index, laserindex):
+def lasershot(gv, index, lt, isshooting):
     #cria e move se houver criado
-    if(laserindex == -1):
-        alock.acquire
+    if(isshooting == False):
+        isshooting = True
         alienrect = gv.aliendict['alien'][1][index]
         laserrect = gv.aliendict['laser'][0].get_rect()
         laserrect = laserrect.move(alienrect.left+15,alienrect.bottom)
-        gv.aliendict['laser'][1].append(laserrect)
-        laserindex = gv.aliendict['laser'][1].index(laserrect)
-        alock.release
+        gv.aliendict['laser'][1][lt] = laserrect
     else:
-        laserrect = gv.aliendict['laser'][1][laserindex]
+        laserrect = gv.aliendict['laser'][1][lt]
         laserrect = laserrect.move(0,3)
-        gv.aliendict['laser'][1][laserindex] = laserrect
+        gv.aliendict['laser'][1][lt] = laserrect
         if gv.size[1] < laserrect.top:
-            gv.aliendict['laser'][1].pop(laserindex)
-            laserindex = -1
+            gv.aliendict['laser'][1].pop(lt)
+            isshooting = False
 
-    return laserindex
+    return isshooting
 
 def movealien(gv, index, direction, limitmove):
     alienrect = gv.aliendict['alien'][1][index]
@@ -63,17 +61,13 @@ def talien(gv, alienrect, alock):
     direction = True
     limitmove = 50
     isshooting = False
-    laserindex = -1
     while True:
         time.sleep(gv.fps)
 
         if random() > 0.999 and not isshooting:
-            isshooting = True
-            laserindex = lasershot(gv, alock, index, laserindex)
-        elif(laserindex != -1 and isshooting):
-            laserindex = lasershot(gv, alock, index, laserindex)
-        elif(laserindex == -1 and isshooting):
-            isshooting = False
+            isshooting = lasershot(gv, index, threading.currentThread().getName(), isshooting)
+        elif(isshooting):
+            isshooting = lasershot(gv, index, threading.currentThread().getName(), isshooting)
 
         direction, limitmove, index = movealien(gv,index, direction, limitmove)
         if index == -1:

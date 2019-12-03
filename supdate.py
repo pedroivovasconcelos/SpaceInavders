@@ -16,10 +16,8 @@ def screenupdate(gv):
                 for aliens in aliendict['alien'][1]:
                     screen.blit(aliendict['alien'][0], aliens)
             if 'laser' in aliendict and len(aliendict['laser'][1].keys()) != 0:
-                for laserslist in aliendict['laser'][1].keys():
-                    if not laserslist == False:
-                        for lasers in laserslist:
-                            screen.blit(aliendict['laser'][0], lasers)
+                for lasers in aliendict['laser'][1].values():
+                    screen.blit(aliendict['laser'][0], lasers)
 
         if not obstaclelist == False:
             if len(obstaclelist) != 0:
