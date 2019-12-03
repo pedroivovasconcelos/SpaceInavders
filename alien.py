@@ -1,4 +1,4 @@
-import pygame, sys, time, gamestart, threading
+import pygame, time, gamestart, threading
 
 counter = 0
 row = 0
@@ -6,7 +6,7 @@ def talien(gv, alienrect, alock):
     global counter
     global row
     alock.acquire
-    newalienrect = alienrect.move(counter*50-row*250,alienrect.top+50*row)
+    newalienrect = alienrect.move(counter*50,alienrect.top+50*row)
     gv.aliendict['alien'][1].append(newalienrect)
     counter+=1
     if counter == 5:
@@ -31,7 +31,7 @@ def talien(gv, alienrect, alock):
     gv.level+=1
     if(gv.level <= 20):
         for _ in range(gv.level):
-            at = threading.Thread(target = talien, args = (gv,alienrect,alock))
+            at = threading.Thread(target = talien, args = (gv,alienrect,alock,))
             at.daemon = True
             at.start
     super.join()
@@ -50,8 +50,9 @@ def aliens(gv):
     
     #para ir ao level desejado
     alock = threading.Lock()
-    for _ in range(gv.level-1):
-        at = threading.Thread(target = talien, args = (gv,alienrect,alock))
+    for t in range(gv.level-1):
+        print(t)
+        at = threading.Thread(target = talien, args = (gv,alienrect,alock,))
         at.daemon = True
-        at.start
+        at.start()
     talien(gv,alienrect,alock)
