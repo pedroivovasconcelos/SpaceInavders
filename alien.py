@@ -18,10 +18,9 @@ def lasershot(gv, alock, index, laserindex):
         laserrect = gv.aliendict['laser'][1][laserindex]
         laserrect = laserrect.move(0,3)
         gv.aliendict['laser'][1][laserindex] = laserrect
-
-    if gv.size[1] < laserrect.top:
-        gv.aliendict['laser'][1].pop(laserindex)
-        laserindex = -1
+        if gv.size[1] < laserrect.top:
+            gv.aliendict['laser'][1].pop(laserindex)
+            laserindex = -1
 
     return laserindex
 
@@ -38,19 +37,22 @@ def movealien(gv, index, direction, limitmove):
         alienrect = alienrect.move(0,10)
         direction = not direction
         limitmove = 50
-    
-    gv.aliendict['alien'][1][index] = alienrect
+        if gv.size[1] < alienrect.top:
+            gv.aliendict['alien'][1].pop(index)
+            index = -1
+    if index != -1:
+        gv.aliendict['alien'][1][index] = alienrect
 
-    return direction, limitmove
+    return direction, limitmove, index
 
 
 def talien(gv, alienrect, alock):
     global counter
     global row
     alock.acquire
-    newalienrect = alienrect.move(counter*50,alienrect.top+50*row)
-    gv.aliendict['alien'][1].append(newalienrect)
-    index = gv.aliendict['alien'][1].index(newalienrect)
+    alienrect = alienrect.move(counter*50,alienrect.top+50*row)
+    gv.aliendict['alien'][1].append(alienrect)
+    index = gv.aliendict['alien'][1].index(alienrect)
     counter+=1
     indexline = counter
     if counter == 5:
@@ -64,7 +66,7 @@ def talien(gv, alienrect, alock):
     laserindex = -1
     while True:
         time.sleep(gv.fps)
-        direction, limitmove = movealien(gv,index, direction, limitmove)
+
         if random() > 0.999 and not isshooting:
             isshooting = True
             laserindex = lasershot(gv, alock, index, laserindex)
@@ -73,6 +75,9 @@ def talien(gv, alienrect, alock):
         elif(laserindex == -1 and isshooting):
             isshooting = False
 
+        direction, limitmove, index = movealien(gv,index, direction, limitmove)
+        if index == -1:
+            break
         if len(gv.aliendict['alien'][1]) == 0:
             break
         
