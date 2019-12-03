@@ -5,7 +5,25 @@ counter = 0
 row = 0
 
 def lasershot(gv, alock, index, laserindex):
-    return
+    #cria e move se houver criado
+    if(laserindex == -1):
+        alock.acquire
+        alienrect = gv.aliendict['alien'][1][index]
+        laserrect = gv.aliendict['laser'][0].get_rect()
+        laserrect = laserrect.move(alienrect.left+15,alienrect.bottom)
+        gv.aliendict['laser'][1].append(laserrect)
+        laserindex = gv.aliendict['laser'][1].index(laserrect)
+        alock.release
+    else:
+        laserrect = gv.aliendict['laser'][1][laserindex]
+        laserrect = laserrect.move(0,3)
+        gv.aliendict['laser'][1][laserindex] = laserrect
+
+    if gv.size[1] < laserrect.top:
+        gv.aliendict['laser'][1].pop(laserindex)
+        laserindex = -1
+
+    return laserindex
 
 def movealien(gv, index, direction, limitmove):
     alienrect = gv.aliendict['alien'][1][index]
@@ -47,17 +65,13 @@ def talien(gv, alienrect, alock):
     while True:
         time.sleep(gv.fps)
         direction, limitmove = movealien(gv,index, direction, limitmove)
-        if random() > 0.9 and not isshooting:
+        if random() > 0.999 and not isshooting:
             isshooting = True
-            indexlaser = lasershot(gv, alock, index, laserindex)
-
-        # laser = gv.aliendict['laser'][0]
-        # laserlist = gv.aliendict['laser'][1]
-        # if len(laserlist) != 0:
-        #     for index, aliens in enumerate(laserlist):
-        #         laserlist[index] = aliens.move(0,-5)
-        #         if 0 > laser.bottom:
-        #             laserlist.pop(index)
+            laserindex = lasershot(gv, alock, index, laserindex)
+        elif(laserindex != -1 and isshooting):
+            laserindex = lasershot(gv, alock, index, laserindex)
+        elif(laserindex == -1 and isshooting):
+            isshooting = False
 
         if len(gv.aliendict['alien'][1]) == 0:
             break
@@ -72,15 +86,14 @@ def talien(gv, alienrect, alock):
         
 
 def aliens(gv):
-    aliendict = gv.aliendict
     alien = pygame.image.load("images/alien.png")
     alienrect = alien.get_rect()
     alienlist = []
     laser = pygame.image.load("images/laser.png")
     laserlist = []
 
-    aliendict['alien'] = [alien,alienlist]
-    aliendict['laser'] = [laser,laserlist]
+    gv.aliendict['alien'] = [alien,alienlist]
+    gv.aliendict['laser'] = [laser,laserlist]
     
     #para ir ao level desejado
     alock = threading.Lock()
