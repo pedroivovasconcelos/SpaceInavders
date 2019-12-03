@@ -13,11 +13,14 @@ def lasershot(gv, index, lt, isshooting):
         laserrect = laserrect.move(alienrect.left+15,alienrect.bottom)
         gv.aliendict['laser'][1][lt] = laserrect
     else:
-        laserrect = gv.aliendict['laser'][1][lt]
-        laserrect = laserrect.move(0,3)
-        gv.aliendict['laser'][1][lt] = laserrect
-        if gv.size[1] < laserrect.top:
-            gv.aliendict['laser'][1].pop(lt)
+        if lt in gv.aliendict['laser'][1].keys():
+            laserrect = gv.aliendict['laser'][1][lt]
+            laserrect = laserrect.move(0,3)
+            gv.aliendict['laser'][1][lt] = laserrect
+            if gv.size[1] < laserrect.top:
+                gv.aliendict['laser'][1].pop(lt)
+                isshooting = False
+        else:
             isshooting = False
 
     return isshooting
