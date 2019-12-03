@@ -16,20 +16,22 @@ def renewobs(gv):
 def obstacles(gv):
     global level
     global damage
-        
+    index = -1
     while 1:
         if level != gv.level:
             level = gv.level
             damage = 0
             renewobs(gv)
-        
-        # index = 0
-        # for obs in gv.obstaclelist:
-        #     hit = obs[2].collidelistall(gv.aliendict['laser'][1].values())
-        #     if hit:
-        #         gv.obstaclelist()
-        #         for lt in obs[2].collidelistall(gv.aliendict['laser'][1].items()):
-        #             if lt[1] in hit:
-        #                 gv.aliendict['laser'][1].pop(lt)
-        
+
+        if 'laser' in gv.aliendict:
+            for lt in list(gv.aliendict['laser'][1].items()):
+                for obstacles in gv.obstaclelist:
+                    if obstacles[2].colliderect(lt[1]):
+                        index = gv.obstaclelist.index(obstacles)
+                        gv.obstaclelist[index][1]+=1
+                        if(gv.obstaclelist[index][1] > 2):
+                            gv.obstaclelist[index][0] = None
+                        gv.obstaclelist[index][0] = pygame.image.load(f"images/obstacles{gv.obstaclelist[index][1]}.png")
+                        gv.aliendict['laser'][1].pop(lt[0])
+
         time.sleep(gv.fps)

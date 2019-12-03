@@ -15,6 +15,7 @@ class gamevariables:
     inicio = None
     fim = None
     screen = None
+    score = 0
     #listas são compostas por retângulos dos respectivos objetos, para destruir um objeto
     #uma lista fixa de produtor consumidor é gerada para destruir os objetos
     playerdict = dict() #{'player':[spaceship,spaceshiprect],'shoots':[shoot,shootlist]}
@@ -63,7 +64,7 @@ if __name__ == "__main__":
                 running = False
         time.sleep(0.01)
 
-        if gv.creditgame <= 0:
+        if gv.creditgame <= 0 or gv.level > 20:
             running = False
 
     quit()

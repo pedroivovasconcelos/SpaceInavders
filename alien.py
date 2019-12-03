@@ -25,8 +25,7 @@ def lasershot(gv, index, lt, isshooting):
 
     return isshooting
 
-def movealien(gv, index, direction, limitmove):
-    alienrect = gv.aliendict['alien'][1][index]
+def movealien(gv, direction, limitmove, index, alienrect):
     #em linha e em coluna
     if(gv.size[0] != alienrect.right and direction and limitmove > 0):
         alienrect = alienrect.move(1,0)
@@ -39,12 +38,12 @@ def movealien(gv, index, direction, limitmove):
         direction = not direction
         limitmove = 50
         if gv.size[1] < alienrect.top:
-            gv.aliendict['alien'][1].pop(index)
+            gv.aliendict['alien'][1].remove(alienrect)
             index = -1
     if index != -1:
         gv.aliendict['alien'][1][index] = alienrect
 
-    return direction, limitmove, index
+    return direction, limitmove, index, alienrect
 
 
 def talien(gv, alienrect, alock):
@@ -61,33 +60,45 @@ def talien(gv, alienrect, alock):
         row+=1
     alock.release
 
+    isalive = True
     direction = True
     limitmove = 50
     isshooting = False
-    while True:
+    while isalive:
         time.sleep(gv.fps)
+
+        index = gv.aliendict['alien'][1].index(alienrect)
+        direction, limitmove, index, alienrect = movealien(gv, direction, limitmove, index, alienrect)
+        if index == -1:
+            break
 
         if random() > 0.999 and not isshooting:
             isshooting = lasershot(gv, index, threading.currentThread().getName(), isshooting)
         elif(isshooting):
             isshooting = lasershot(gv, index, threading.currentThread().getName(), isshooting)
 
-        direction, limitmove, index = movealien(gv,index, direction, limitmove)
-        if index == -1:
-            break
-        if len(gv.aliendict['alien'][1]) == 0:
-            break
-        
-    gv.level+=1
-    if(gv.level <= 20):
-        for _ in range(gv.level):
-            at = threading.Thread(target = talien, args = (gv,alienrect,alock,))
-            at.daemon = True
-            at.start
-    super.join()
+        if 'shoots' in gv.playerdict:
+            for st in list(gv.playerdict['shoots'][1]):
+                if gv.aliendict['alien'][1][index].colliderect(st):
+                    isalive = False
+                    gv.playerdict['shoots'][1].remove(st)
+                    break
+    
+    gv.aliendict['alien'][1].pop(index)
+    gv.score+=1
+
+    while isshooting:
+        isshooting = lasershot(gv, index, threading.currentThread().getName(), isshooting)
+
+    if len(gv.aliendict['alien'][1]) == 0:
+        gv.level+=1
+        aliens(gv)
         
 
 def aliens(gv):
+    global counter
+    global row
+    counter, row = 0, 0
     alien = pygame.image.load("images/alien.png")
     alienrect = alien.get_rect()
     alienlist = []
@@ -98,9 +109,10 @@ def aliens(gv):
     gv.aliendict['laser'] = [laser,laserdict]
     
     #para ir ao level desejado
-    alock = threading.Lock()
-    for t in range(gv.level-1):
-        at = threading.Thread(target = talien, args = (gv,alienrect,alock,))
-        at.daemon = True
-        at.start()
+    if(gv.level <= 20):
+        alock = threading.Lock()
+        for t in range(gv.level-1):
+            at = threading.Thread(target = talien, args = (gv,alienrect,alock,))
+            at.daemon = True
+            at.start()
     talien(gv,alienrect,alock)
