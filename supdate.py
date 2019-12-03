@@ -4,6 +4,8 @@ black = 0, 0, 0
 
 def screenupdate(gv):
     screen = gv.screen
+    font = pygame.font.Font('freesansbold.ttf', 16)
+    
     while True:
         time.sleep(gv.fps)
         playerdict = gv.playerdict
@@ -31,5 +33,11 @@ def screenupdate(gv):
             if 'shoots' in playerdict and len(playerdict['shoots'][1]) != 0:
                 for shoots in playerdict['shoots'][1]:
                     screen.blit(playerdict['shoots'][0], shoots)
+
+        credittext = str(gv.creditgame) + ' X CREDITS'
+        text = font.render(credittext, True, [255,255,255], None)
+        textrect = text.get_rect()
+        textrect = textrect.move(100,475)
+        screen.blit(text,textrect) 
     
         pygame.display.flip()

@@ -39,6 +39,8 @@ def player(gv):
                 shootlist[index] = shoots.move(0,-5)
                 if 0 > shoots.top:
                     shootlist.pop(index)
+
+        
         
         playerdict['player'] = [spaceship,spaceshiprect]
         playerdict['shoots'] = [shoot,shootlist]
