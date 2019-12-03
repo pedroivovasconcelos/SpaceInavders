@@ -23,4 +23,13 @@ def obstacles(gv):
             damage = 0
             renewobs(gv)
         
+        # index = 0
+        # for obs in gv.obstaclelist:
+        #     hit = obs[2].collidelistall(gv.aliendict['laser'][1].values())
+        #     if hit:
+        #         gv.obstaclelist()
+        #         for lt in obs[2].collidelistall(gv.aliendict['laser'][1].items()):
+        #             if lt[1] in hit:
+        #                 gv.aliendict['laser'][1].pop(lt)
+        
         time.sleep(gv.fps)

@@ -63,4 +63,7 @@ if __name__ == "__main__":
                 running = False
         time.sleep(0.01)
 
+        if gv.creditgame <= 0:
+            running = False
+
     quit()

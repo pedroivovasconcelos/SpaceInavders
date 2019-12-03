@@ -40,12 +40,11 @@ def player(gv):
                 if 0 > shoots.top:
                     shootlist.pop(index)
 
-        hit = spaceshiprect.collidelistall(gv.aliendict['laser'][1].values())
-        if hit:
-            gv.creditgame-=1
-            for lt in spaceshiprect.collidelistall(gv.aliendict['laser'][1].items()):
-                if lt[1] in hit:
-                    gv.aliendict['laser'][1].pop(lt)
+        lasersthreads = list(gv.aliendict['laser'][1].items())
+        for lt in lasersthreads:
+            if spaceshiprect.colliderect(lt[1]):
+                gv.creditgame-=1
+                gv.aliendict['laser'][1].pop(lt[0])
 
         playerdict['player'] = [spaceship,spaceshiprect]
         playerdict['shoots'] = [shoot,shootlist]
