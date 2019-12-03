@@ -8,7 +8,7 @@ class gamevariables:
 
     size = width, height = 300, 500
     creditgame = 3
-    level = 1
+    level = 17
     fps = 1/30
     screen = None
     #listas são compostas por retângulos dos respectivos objetos, para destruir um objeto
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     s.daemon = True
     p = threading.Thread(target = player.player, args = (gv,))
     p.daemon = True
-    a = threading.Thread(target = alien.alien, args = (gv,))
+    a = threading.Thread(target = alien.aliens, args = (gv,))
     a.daemon = True
     s.start()
     p.start()

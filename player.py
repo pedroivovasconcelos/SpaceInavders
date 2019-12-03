@@ -16,7 +16,7 @@ def player(gv):
     shootlist = []
     charger = 0
     while 1:
-        time.sleep(1/30)
+        time.sleep(gv.fps)
 
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT]:

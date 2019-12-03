@@ -5,7 +5,7 @@ black = 0, 0, 0
 def screenupdate(gv):
     screen = gv.screen
     while True:
-        time.sleep(1/30)
+        time.sleep(gv.fps)
         playerdict = gv.playerdict
         aliendict = gv.aliendict
         screen.fill(black)
