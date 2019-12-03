@@ -18,7 +18,7 @@ class gamevariables:
     #listas são compostas por retângulos dos respectivos objetos, para destruir um objeto
     #uma lista fixa de produtor consumidor é gerada para destruir os objetos
     playerdict = dict() #{'player':[spaceship,spaceshiprect],'shoots':[shoot,shootlist]}
-    aliendict = dict() #{'aliens':[alien,alienlist],'laser':[laser,laserlist]}
+    aliendict = dict() #{'aliens':[alien,alienlist],'laser':[laser,laserdict]}, laserdict{laserrect:alienrect}
     obstaclelist = [] #{[obstaclelist]}, obstaclelist = [obstacle, damage, obstaclerect]
 
 def main():
