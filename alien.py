@@ -85,7 +85,7 @@ def talien(gv, alienrect, alock):
                     break
     
     gv.aliendict['alien'][1].pop(index)
-    gv.score+=1
+    gv.score+=100
 
     while isshooting:
         isshooting = lasershot(gv, index, threading.currentThread().getName(), isshooting)

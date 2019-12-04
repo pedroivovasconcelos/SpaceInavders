@@ -37,7 +37,13 @@ def screenupdate(gv):
         credittext = str(gv.creditgame) + ' X CREDITS'
         text = font.render(credittext, True, [255,255,255], None)
         textrect = text.get_rect()
-        textrect = textrect.move(100,475)
+        textrect = textrect.move(20,475)
         screen.blit(text,textrect) 
     
+        credittext = str(gv.score) + ' SCORE'
+        text = font.render(credittext, True, [255,255,255], None)
+        textrect = text.get_rect()
+        textrect = textrect.move(200,475)
+        screen.blit(text,textrect) 
+
         pygame.display.flip()

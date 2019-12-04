@@ -1,4 +1,4 @@
-import pygame, sys, time, gamestart   
+import pygame, sys, time, gamestart, datetime 
 
 def player(gv):
     x = 125
@@ -44,6 +44,8 @@ def player(gv):
             if spaceshiprect.colliderect(lt[1]):
                 gv.creditgame-=1
                 gv.aliendict['laser'][1].pop(lt[0])
+            if gv.creditgame == 0:
+                gv.fim = datetime.now()
 
         playerdict['player'] = [spaceship,spaceshiprect]
         playerdict['shoots'] = [shoot,shootlist]

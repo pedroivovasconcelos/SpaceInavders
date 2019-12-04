@@ -11,6 +11,10 @@
 
    sudo apt-get install python3
 
+ Para executar o servidor, execute a partir do arquivo "servidor_udp.py" com o seguinte comando:
+    
+    python3 servidor_udp.py
+
  Para executar o game, execute a partir do arquivo "gamestart.py" com o seguinte comando:
 
     python3 gamestart.py

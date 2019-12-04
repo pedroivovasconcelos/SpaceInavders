@@ -10,7 +10,8 @@ class gamevariables:
 
     size = width, height = 300, 500
     creditgame = 3
-    level = 17
+    level = 1
+    score = 0
     fps = 1/30
     inicio = None
     fim = None
